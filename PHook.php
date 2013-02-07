@@ -67,11 +67,9 @@ Class PHook{
 
 	public function withoutACommand(){
 		if($this->trigger_keyword === false || $this->hasTrigger()){
-
 			echo $this->message_color . $this->message . "[0m\n";
-			$this->message = "";
-			$this->trigger_keyword = false;
 		}	
+		$this->resetSelf();
 	}
 
 	//**---------- All The Color Variations ----------**//
@@ -115,15 +113,12 @@ Class PHook{
 				echo $this->success_color . $this->success_text . "[0m\n";
 			}
 
-			unset($this->task);
-			$this->message = "";
-			$this->success_text = "";
-			$this->failure_text = "";
-			$this->started_error = false;
-			$this->trigger_keyword = false;
+			$this->resetSelf();
 
 			return $res;
 		}
+
+		$this->resetSelf();
 
 		return false;
 	}
@@ -141,6 +136,17 @@ Class PHook{
 			return (strpos($msg, $this->trigger_keyword) !== false) ? true : false;
 		}
 		return false;
+	}
+
+	//**---------- Reset Function ----------**//
+
+	private function resetSelf(){
+			unset($this->task);
+			$this->message = "";
+			$this->success_text = "";
+			$this->failure_text = "";
+			$this->started_error = false;
+			$this->trigger_keyword = false;
 	}
 
 } 
