@@ -11,5 +11,9 @@ $ph->say("Getting a ")->red("Cup")->plain(" of Coffee")->thenRun(function(){
 
 $ph->say("")->clear("Running ")->red("Impossible")->clear(" Function ... ")->thenRun(function(){ return false; })->thenSay("It Worked")->unlessFails("The Function Failed")->white(" What a Surprise")->plain(" !!")->apply();
 
+$ph->onTrigger("Commit")->say("The Commit Message Has The Word '")->cyan("Commit")->plain("'")->withoutACommand();
+
+$ph->onTrigger("Second")->say("The Commit Has The Word '")->cyan("Second")->plain("'")->withoutACommand();
+
 ?>
 
