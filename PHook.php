@@ -52,7 +52,7 @@ Class PHook{
 	}
 
 	public function andFinallySay($text){
-		$this->success_text = $text;
+		$this->success_text .= $text;
 		$this->apply();
 	}
 
