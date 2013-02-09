@@ -1,154 +1,215 @@
 <?php
+/**
+* PHook
+*
+* @category CLI_Helper
+* @package  PHook
+* @author   Gabriel Manricks <gmanricks@icloud.com>
+* @license  http://gmanricks.mit-license.org/ MIT License
+* @link     https://github.com/gmanricks/PHP-GIT-Hooks
+*/
 
-Class PHook{
-	
-	//**---------- Messages ----------**//
+namespace Codestaq\PHook;
 
-	private $message;
-	private $success_text;
-	private $failure_text;
+class PHook
+{
 
-	//**---------- Colors ----------**//
+    /**---------- Messages ----------**/
 
-	private $message_color;
-	private $success_color;
-	private $failure_color;
+    private $_message;
+    private $_success_text;
+    private $_failure_text;
 
-	//**---------- Function ----------**//
+    /**---------- Colors ----------**/
 
-	private $task;
+    private $_message_color;
+    private $_success_color;
+    private $_failure_color;
 
-	//**---------- Helpers ----------**//
+    /**---------- Function ----------**/
 
-	private $started_error;
+    private $_task;
 
-	private $trigger_keyword;
+    /**---------- Helpers ----------**/
 
+    private $_started_error;
+    private $_trigger_keyword;
 
-	public function __construct($mColor = "33", $sColor = "36", $fColor = "31"){
-		$this->message_color = "[" . $mColor . "m";
-		$this->success_color = "[" . $sColor . "m";
-		$this->failure_color = "[" . $fColor . "m";
-		$this->message = "";
-		$this->success_text = "";
-		$this->failure_text = "";
-		$this->started_error = false;
-		$this->trigger_keyword = false;
-	}
+    public function __construct($mColor = "33", $sColor = "36", $fColor = "31")
+    {
+        $this->_message_color = "[" . $mColor . "m";
+        $this->_success_color = "[" . $sColor . "m";
+        $this->_failure_color = "[" . $fColor . "m";
+        $this->_message = "";
+        $this->_success_text = "";
+        $this->_failure_text = "";
+        $this->_started_error = false;
+        $this->_trigger_keyword = false;
+    }
 
-	//**---------- Functions for Messages ----------**//
+    //**---------- Functions for Messages ----------**//
 
-	public function say($text){
-		if(isset($this->task)){
-			if($this->started_error){
-				$this->failure_text .= $text;
-			} else {
-				$this->success_text .= $text;
-			}
-		} else {
-			$this->message .= $text;
-		}
-		return $this;
-	}
+    public function say($text)
+    {
+        if (isset($this->_task)) {
+            if ($this->_started_error) {
+                $this->_failure_text .= $text;
+            } else {
+                $this->_success_text .= $text;
+            }
+        } else {
+            $this->_message .= $text;
+        }
 
-	public function andFinallySay($text){
-		$this->success_text .= $text;
-		$this->apply();
-	}
+        return $this;
+    }
 
-	public function thenSay($text){
-		return $this->say($text);
-	}
+    public function andFinallySay($text)
+    {
+        $this->_success_text .= $text;
+        $this->apply();
+    }
 
-	public function unlessFails($text){
-		$this->started_error = true;
-		return $this->say($text);
-	}
+    public function thenSay($text)
+    {
+        return $this->say($text);
+    }
 
-	public function withoutACommand(){
-		if($this->trigger_keyword === false || $this->hasTrigger()){
-			echo $this->message_color . $this->message . "[0m\n";
-		}	
-		$this->resetSelf();
-	}
+    public function unlessFails($text)
+    {
+        $this->_started_error = true;
 
-	//**---------- All The Color Variations ----------**//
+        return $this->say($text);
+    }
 
-	public function clear($text){ return $this->say("[0m" . $text); }
-	public function black($text){ return $this->say("[30m" . $text); }
-	public function red($text){ return $this->say("[31m" . $text); }
-	public function green($text){ return $this->say("[32m" . $text); }
-	public function yellow($text){ return $this->say("[33m" . $text); }
-	public function blue($text){ return $this->say("[34m" . $text); }
-	public function magenta($text){ return $this->say("[35m" . $text); }
-	public function cyan($text){ return $this->say("[36m" . $text); }
-	public function white($text){ return $this->say("[37m" . $text); }
-	public function plain($text){ 
-		$col = "[0m";
-		if(isset($this->task)){
-			$col = ($this->started_error) ? $this->failure_color : $this->success_color;
-		}
-		else{
-			$col = $this->message_color;
-		}
-		return $this->say($col . $text); 
-	}
+    public function withoutACommand()
+    {
+        if ($this->_trigger_keyword === false || $this->hasTrigger()) {
+            echo $this->_message_color . $this->_message . "[0m\n";
+        }
+        $this->resetSelf();
+    }
 
-	//**---------- Run Functions ----------**//
+    //**---------- All The Color Variations ----------**//
 
-	public function thenRun($func){
-		$this->task = $func;
-		return $this;
-	}
+    public function clear($text)
+    {
+        return $this->say("[0m" . $text);
+    }
 
-	public function apply(){
-		if($this->trigger_keyword === false || $this->hasTrigger()){
-			echo $this->message_color . $this->message . "[0m";
+    public function black($text)
+    {
+        return $this->say("[30m" . $text);
+    }
 
-			$res = call_user_func($this->task);
+    public function red($text)
+    {
+        return $this->say("[31m" . $text);
+    }
 
-			if($res === false && $this->failure_text !== ""){
-				echo $this->failure_color . $this->failure_text . "[0m\n";
-			} else {
-				echo $this->success_color . $this->success_text . "[0m\n";
-			}
+    public function green($text)
+    {
+        return $this->say("[32m" . $text);
+    }
 
-			$this->resetSelf();
+    public function yellow($text)
+    {
+        return $this->say("[33m" . $text);
+    }
 
-			return $res;
-		}
+    public function blue($text)
+    {
+        return $this->say("[34m" . $text);
+    }
 
-		$this->resetSelf();
+    public function magenta($text)
+    {
+        return $this->say("[35m" . $text);
+    }
 
-		return false;
-	}
+    public function cyan($text)
+    {
+        return $this->say("[36m" . $text);
+    }
 
-	//**---------- Trigger Functions ----------**//
+    public function white($text)
+    {
+        return $this->say("[37m" . $text);
+    }
 
-	public function onTrigger($tKey){
-		$this->trigger_keyword = $tKey;
-		return $this;
-	}
+    public function plain($text)
+    {
+        $col = "[0m";
+        if (isset($this->_task)) {
+            $col = ($this->_started_error) ? $this->_failure_color : $this->_success_color;
+        } else {
+            $col = $this->_message_color;
+        }
 
-	public function hasTrigger(){
-		if($this->trigger_keyword !== false){
-			$msg = exec("git log -n 1 --format=format:%s%b");
-			return (strpos($msg, $this->trigger_keyword) !== false) ? true : false;
-		}
-		return false;
-	}
+        return $this->say($col . $text);
+    }
 
-	//**---------- Reset Function ----------**//
+    //**---------- Run Functions ----------**//
 
-	private function resetSelf(){
-			unset($this->task);
-			$this->message = "";
-			$this->success_text = "";
-			$this->failure_text = "";
-			$this->started_error = false;
-			$this->trigger_keyword = false;
-	}
+    public function thenRun($func)
+    {
+        $this->_task = $func;
 
-} 
+        return $this;
+    }
 
-?>
+    public function apply()
+    {
+        if ($this->_trigger_keyword === false || $this->hasTrigger()) {
+            echo $this->_message_color . $this->_message . "[0m";
+
+            $res = call_user_func($this->_task);
+
+            if ($res === false && $this->_failure_text !== "") {
+                echo $this->_failure_color . $this->_failure_text . "[0m\n";
+            } else {
+                echo $this->_success_color . $this->_success_text . "[0m\n";
+            }
+
+            $this->resetSelf();
+
+            return $res;
+        }
+
+        $this->resetSelf();
+
+        return false;
+    }
+
+    //**---------- Trigger Functions ----------**//
+
+    public function onTrigger($tKey)
+    {
+        $this->_trigger_keyword = $tKey;
+
+        return $this;
+    }
+
+    private function hasTrigger()
+    {
+        if ($this->_trigger_keyword !== false) {
+            $msg = exec("git log -n 1 --format=format:%s%b");
+
+            return (strpos($msg, $this->_trigger_keyword) !== false) ? true : false;
+        }
+
+        return false;
+    }
+
+    //**---------- Reset Function ----------**//
+
+    private function resetSelf()
+    {
+            unset($this->_task);
+            $this->_message = "";
+            $this->_success_text = "";
+            $this->_failure_text = "";
+            $this->_started_error = false;
+            $this->_trigger_keyword = false;
+    }
+}
