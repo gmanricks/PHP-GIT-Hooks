@@ -14,7 +14,7 @@ A created this class as verbose as possible, in terms of function names. So to r
         file_put_contents("Gunther.png", file_get_contents("https://dl.dropbox.com/u/30949096/Gunther.png"));
      })->andFinallySay("Done");
 ```
-This will Download a picture of a Cool Penguin to your PC.
+This will Download a picture of a Sassy Penguin to your PC.
 
 There are more advanced commands like `onTrigger` which will only run the command when a special trigger keyword is found in the current commit message.
 
