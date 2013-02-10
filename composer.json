@@ -1,0 +1,19 @@
+{
+    "name": "Codestaq/PHook",
+    "type": "CLI Helper",
+    "description": "Helper class for creating PHP Git Hooks",
+    "keywords": ["cli","git"],
+    "homepage": "https://github.com/gmanricks/PHP-GIT-Hooks",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gabriel Manricks",
+            "email": "gmanricks@icloud.com",
+            "homepage": "http://gabrielmanricks.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    }
+}
