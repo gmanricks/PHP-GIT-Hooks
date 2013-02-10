@@ -1,6 +1,6 @@
 {
     "name": "codestaq/phook",
-    "type": "CLI_Helper",
+    "type": "CLI-Helper",
     "description": "Helper class for creating PHP Git Hooks",
     "keywords": ["cli","git"],
     "homepage": "https://github.com/gmanricks/PHP-GIT-Hooks",
