@@ -9,7 +9,7 @@ You can install the package through composer using:
 ```json
 {
   "require": {
-    "codestaq/phook": "dev-master"
+    "codestaq/phook": "1.0"
   }
 }
 ```
