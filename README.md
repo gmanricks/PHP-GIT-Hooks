@@ -5,11 +5,20 @@ A PHP Class for Helping you run custom functions in Git Hooks
 
 ## Usage
 
+You can install the package through composer using:
+```json
+{
+  "require": {
+    "codestaq/phook": "dev-master"
+  }
+}
+```
+
 A created this class as verbose as possible, in terms of function names. So to run a simple function with a message before and after it you would type:
 ```php
   use Codestaq\PHook;
 
-  $ph = new PHook\PHook;
+  $ph = new PHook;
   
   $ph->say("Downloading some Gunther ... ")
      ->thenRun(function(){
