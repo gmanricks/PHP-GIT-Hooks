@@ -9,7 +9,7 @@
 * @link     https://github.com/gmanricks/PHP-GIT-Hooks
 */
 
-namespace Codestaq\PHook;
+namespace Codestaq;
 
 class PHook
 {

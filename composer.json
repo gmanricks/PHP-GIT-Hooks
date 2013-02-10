@@ -1,5 +1,5 @@
 {
-    "name": "Codestaq/PHook",
+    "name": "codestaq/phook",
     "type": "CLI Helper",
     "description": "Helper class for creating PHP Git Hooks",
     "keywords": ["cli","git"],
