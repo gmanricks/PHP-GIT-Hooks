@@ -7,7 +7,9 @@ A PHP Class for Helping you run custom functions in Git Hooks
 
 A created this class as verbose as possible, in terms of function names. So to run a simple function with a message before and after it you would type:
 ```php
-  $ph = new PHook;
+  use Codestaq\PHook;
+
+  $ph = new PHook\PHook;
   
   $ph->say("Downloading some Gunther ... ")
      ->thenRun(function(){
